@@ -1,0 +1,35 @@
+{
+ "name": "Segundas Lecturas del Oficio — Leccionario Bienal (Oficio de Lectura)",
+ "description": "Segundas lecturas (patrísticas y hagiográficas) y terceras lecturas dominicales del Leccionario Bienal del Oficio de Lectura, en español, con primera lectura del día, responsorio, oración, referencias bíblicas y temas.",
+ "language": "es",
+ "count": 1184,
+ "chunk_size": 50,
+ "endpoints": {
+  "index": "data/index.json — {authors:{id:{es,en,dates,n}}, readings:[{id,k(L2|L3),a(autor),t(título),s(fuente),c(cita patrística),sn(inicio),o([[año,tiempo,día,sección]]),ch(bloque),w(palabras),fb(libro 1ª lectura),e(1 si hay traducción inglesa),th([temas])}]}",
+  "reading": "data/r/{ch:02d}.json — objeto por id: text, responsory, first_reading, prayer, occurrences, scripture[{book,ref,role}], themes, cite, en",
+  "search_text": "data/search.json — {id: texto plano}",
+  "themes": "data/themes.json — {id_tema: nombre}"
+ },
+ "markdown": {
+  "llms": "llms.txt",
+  "reading": "r/{id}.md",
+  "catalog": "catalogo.md",
+  "calendar": "calendario/index.md",
+  "scripture": "escritura/index.md",
+  "themes": "temas/index.md",
+  "authors": "autores.md"
+ },
+ "ai": {
+  "corpus_markdown": "ai/segundas-lecturas-completo.md",
+  "corpus_markdown_parts": [
+   "ai/segundas-lecturas-parte-1.md",
+   "ai/segundas-lecturas-parte-2.md"
+  ],
+  "corpus_jsonl": "ai/segundas-lecturas.jsonl"
+ },
+ "notes": {
+  "themes": "Temas asignados automáticamente por palabras clave; orientativos.",
+  "en": "reading.en = enlace a una traducción inglesa antigua de dominio público (New Advent), no litúrgica."
+ },
+ "source": "Leccionario Bienal del Oficio de Lectura (ed. P. Alfertson Cedano), textos de la Conferencia Episcopal Española. Publicado con permiso."
+}

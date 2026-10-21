@@ -1,0 +1,528 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Segundas Lecturas del Oficio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&family=Alegreya+SC:wght@500;700&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: breviary page — rubric-red labels over black text; filter column left, list right; a reading opens as a full page. */
+:root{
+  --paper:#F6F5F1; --surface:#FFFFFF; --ink:#1D2130; --muted:#5E6272; --rule:#DEDBD2; --rubric:#A3212A; --rubric-soft:#A3212A14; --mark:#F3E3B8;
+  --f-display:"Alegreya SC",Georgia,serif;
+  --f-body:"Alegreya",Georgia,"Times New Roman",serif;
+  --f-ui:"Alegreya Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --s-1:.8125rem; --s0:1rem; --s1:1.1875rem; --s2:1.5rem; --s3:2.125rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#14161C; --surface:#1B1E26; --ink:#E7E5DF; --muted:#A1A4AF; --rule:#2D313B; --rubric:#E3726B; --rubric-soft:#E3726B1F; --mark:#5A4A1E; color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#14161C; --surface:#1B1E26; --ink:#E7E5DF; --muted:#A1A4AF; --rule:#2D313B; --rubric:#E3726B; --rubric-soft:#E3726B1F; --mark:#5A4A1E; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:var(--s0);line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+.rub{font-family:var(--f-display);color:var(--rubric);letter-spacing:.06em;font-weight:500}
+
+/* header */
+header.top{border-bottom:1px solid var(--rule);background:var(--paper)}
+header.top .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding-block:28px 18px}
+.brand h1{font-family:var(--f-display);font-weight:700;font-size:var(--s3);line-height:1.05;margin:0;letter-spacing:.02em;text-wrap:balance}
+.brand h1 b{color:var(--rubric);font-weight:700}
+.brand p{margin:6px 0 0;color:var(--muted);font-size:var(--s-1);font-variant-numeric:tabular-nums}
+.langs{display:flex;gap:2px;border:1px solid var(--rule);border-radius:999px;padding:3px;background:var(--surface)}
+.langs button{border:0;background:none;padding:4px 12px;border-radius:999px;cursor:pointer;font-size:var(--s-1);color:var(--muted)}
+.langs button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+
+/* search */
+.searchbar{padding-block:20px 8px}
+.sbox{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.sfield{flex:1 1 320px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:0 14px;min-width:0}
+.sfield:focus-within{border-color:var(--rubric)}
+.sfield svg{flex:none;color:var(--muted)}
+.sfield input{flex:1;border:0;background:none;padding:13px 0;font-size:var(--s1);font-family:var(--f-body);min-width:0;outline:none}
+.modes{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface)}
+.modes button{border:0;background:none;padding:0 16px;cursor:pointer;color:var(--muted);font-weight:500;min-height:46px}
+.modes button[aria-pressed="true"]{background:var(--rubric-soft);color:var(--rubric)}
+.hint{color:var(--muted);font-size:var(--s-1);margin:8px 2px 0;min-height:1.3em}
+
+/* main grid */
+.grid{display:grid;grid-template-columns:240px minmax(0,1fr);gap:36px;padding-block:18px 48px}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr);gap:16px}}
+aside.filters{display:flex;flex-direction:column;gap:22px;align-self:start;position:sticky;top:12px}
+@media (max-width:820px){aside.filters{position:static;flex-direction:row;flex-wrap:wrap;gap:14px}}
+.fgroup h3{margin:0 0 8px;font-size:var(--s-1)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--rule);background:var(--surface);border-radius:999px;padding:4px 11px;font-size:var(--s-1);cursor:pointer;display:inline-flex;gap:6px;align-items:baseline}
+.chip .n{color:var(--muted);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{border-color:var(--rubric);color:var(--rubric);background:var(--rubric-soft)}
+.fgroup select{width:100%;max-width:100%;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+@media (max-width:820px){.fgroup{flex:1 1 100%}}
+.reset{border:0;background:none;color:var(--rubric);cursor:pointer;padding:0;font-size:var(--s-1);text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+
+/* results */
+.rhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.rhead .count{font-variant-numeric:tabular-nums;color:var(--muted);font-size:var(--s-1)}
+.rhead button{border:1px solid var(--rule);background:var(--surface);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:var(--s-1)}
+ol.results{list-style:none;margin:0;padding:0}
+ol.results li{border-bottom:1px solid var(--rule)}
+.item{display:block;width:100%;text-align:left;background:none;border:0;padding:18px 4px;cursor:pointer;color:inherit}
+.item:hover .ititle{color:var(--rubric)}
+.imeta{font-size:var(--s-1);display:flex;flex-wrap:wrap;gap:4px 10px}
+.imeta .rub{font-size:.8125rem}
+.imeta .day{color:var(--muted)}
+.ititle{font-family:var(--f-body);font-size:var(--s2);line-height:1.2;margin:4px 0 4px;font-weight:500;text-wrap:balance}
+.iauth{color:var(--ink);font-size:var(--s0);font-weight:500}
+.iauth span{color:var(--muted);font-weight:400}
+.isnip{font-family:var(--f-body);color:var(--muted);font-size:var(--s0);margin:6px 0 0;max-width:68ch}
+.why{font-family:var(--f-body);font-style:italic;color:var(--ink);margin:6px 0 0;max-width:68ch}
+mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
+.more{display:block;margin:20px auto 0;border:1px solid var(--rule);background:var(--surface);border-radius:8px;padding:9px 18px;cursor:pointer}
+.empty{padding:40px 4px;color:var(--muted);font-family:var(--f-body);font-size:var(--s1)}
+.loading{padding:40px 4px;color:var(--muted)}
+
+/* reading page */
+.reading{max-width:720px;margin:0 auto;padding-block:8px 64px}
+.back{border:0;background:none;color:var(--rubric);cursor:pointer;padding:6px 0;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.reading .occ{display:flex;flex-direction:column;gap:2px;margin:18px 0 0;font-size:var(--s-1)}
+.reading .occ div{color:var(--muted)}
+.reading .occ div b{color:var(--ink);font-weight:500}
+.reading h2.lbl{font-size:var(--s0);margin:28px 0 6px}
+.reading .src{font-family:var(--f-body);font-size:var(--s1);margin:0}
+.reading .cit{color:var(--muted);font-size:var(--s-1);margin:4px 0 0;font-variant-numeric:tabular-nums}
+.reading h1.title{font-family:var(--f-body);font-weight:500;font-style:italic;font-size:var(--s3);line-height:1.15;margin:18px 0 20px;text-wrap:balance}
+.prose{font-family:var(--f-body);font-size:1.1875rem;line-height:1.65}
+.prose p{margin:0 0 .9em;max-width:66ch;hyphens:auto}
+.notes{font-family:var(--f-body);font-style:italic;color:var(--muted);border-left:2px solid var(--rule);padding-left:14px;margin:16px 0 0}
+.resp{margin:22px 0 0;font-family:var(--f-body);font-size:var(--s1);line-height:1.55}
+.resp .rref{font-family:var(--f-ui);font-size:var(--s-1);color:var(--muted);margin-left:8px}
+.resp p{margin:4px 0;padding-left:1.6em;text-indent:-1.6em}
+.resp .sig,.resp .ast{color:var(--rubric);font-weight:700}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:26px 0 0;padding-top:16px;border-top:1px solid var(--rule)}
+.tools button{border:1px solid var(--rule);background:var(--surface);border-radius:8px;padding:7px 13px;cursor:pointer;font-size:var(--s-1)}
+details.first{margin:30px 0 0;border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:0 18px}
+details.first summary{cursor:pointer;padding:14px 0;list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+details.first summary::-webkit-details-marker{display:none}
+details.first summary .src{font-size:var(--s0)}
+details.first[open] summary{border-bottom:1px solid var(--rule);margin-bottom:14px}
+details.first .prose{font-size:var(--s0)}
+.prayer{margin:26px 0 0}
+.prayer p{font-family:var(--f-body);font-size:var(--s1);margin:0}
+.related{margin:36px 0 0}
+.related ul{list-style:none;padding:0;margin:8px 0 0}
+.related li button{border:0;background:none;padding:7px 0;cursor:pointer;text-align:left;font-family:var(--f-body);font-size:var(--s0);color:var(--ink)}
+.related li button:hover{color:var(--rubric)}
+.related li span{color:var(--muted);font-family:var(--f-ui);font-size:var(--s-1)}
+
+.tag{font-size:.6875rem;font-weight:700;letter-spacing:.04em;color:var(--muted);border:1px solid var(--rule);border-radius:4px;padding:0 5px;line-height:1.5;align-self:center}
+.tabs{display:flex;gap:4px;margin:24px 0 0;border-bottom:1px solid var(--rule)}
+.tabs button{border:0;background:none;padding:8px 16px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--rubric);border-bottom-color:var(--rubric)}
+.encard{display:grid;gap:2px;margin:18px 0 0;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);text-decoration:none}
+.encard:hover{border-color:var(--rubric)}
+.encard b{font-family:var(--f-body);font-size:var(--s1);font-weight:500}
+.encard span:not(.rub){color:var(--rubric);font-size:var(--s-1)}
+.encard small{color:var(--muted);font-size:var(--s-1)}
+
+/* footer */
+footer{border-top:1px solid var(--rule);color:var(--muted);font-size:var(--s-1)}
+footer .wrap{padding-block:24px 36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px 40px}
+footer h4{margin:0 0 6px}
+footer code{font-family:ui-monospace,Menlo,monospace;font-size:.75rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;word-break:break-all}
+footer p{margin:0 0 6px}
+
+/* use-with-any-AI */
+.aibtn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rubric);color:var(--rubric);background:var(--surface);border-radius:999px;padding:7px 15px;cursor:pointer;font-weight:500;font-size:var(--s-1)}
+.aibtn:hover{background:var(--rubric-soft)}
+.rbtns{display:flex;gap:8px;flex-wrap:wrap}
+dialog.aidlg{border:1px solid var(--rule);border-radius:14px;background:var(--paper);color:var(--ink);padding:0;width:min(720px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
+dialog.aidlg::backdrop{background:#0008}
+.aip{padding:22px 22px 26px;font-family:var(--f-ui)}
+.aip-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.aip-h h2{font-family:var(--f-display);font-size:var(--s2);margin:0;line-height:1.2}
+.aix{border:0;background:none;font-size:1.1rem;cursor:pointer;color:var(--muted);padding:4px 8px}
+.aip-lead{color:var(--muted);margin:6px 0 0}
+.aip section{margin:22px 0 0;padding-top:16px;border-top:1px solid var(--rule)}
+.aip h3{font-size:var(--s-1);margin:0 0 6px}
+.aip p{margin:0 0 10px}
+.aidl{display:grid;gap:8px}
+.aif{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+.aif b{display:block;font-weight:500;overflow-wrap:anywhere}
+.aif>div{min-width:0}
+.aif small{color:var(--muted);font-size:var(--s-1)}
+.aif button,.aibtns button,.aiprompt-h button{border:1px solid var(--rule);background:var(--surface);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:var(--s-1);white-space:nowrap}
+.aif button{border-color:var(--rubric);color:var(--rubric)}
+.aibtns{display:flex;flex-wrap:wrap;gap:8px}
+#ai-cpres{border-color:var(--rubric);color:var(--rubric)}
+details.howto{margin:12px 0 0}
+details.howto summary{cursor:pointer;color:var(--rubric);font-size:var(--s-1)}
+details.howto ul{margin:8px 0 0;padding-left:1.2em;font-size:var(--s-1)}
+details.howto li{margin:0 0 4px}
+.aiprompt{margin:12px 0 0;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+.aiprompt-h{display:flex;justify-content:space-between;align-items:center;padding:8px 10px 0 12px;font-size:var(--s-1)}
+.aiprompt pre{margin:0;padding:8px 12px 12px;white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:.75rem;line-height:1.5;color:var(--ink);max-height:180px;overflow:auto}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:999px;font-size:var(--s-1)}
+@media (prefers-reduced-motion:no-preference){.item,.chip{transition:color .15s,background-color .15s,border-color .15s}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <h1><b>Segundas</b> Lecturas <span id="h-sub">del Oficio</span></h1>
+      <p id="stats">Leccionario Bienal · Oficio de Lectura</p>
+    </div>
+    <button class="aibtn" id="aibtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Usar con tu IA</button>
+  </div>
+</header>
+
+<main>
+  <section id="listview">
+    <div class="wrap searchbar">
+      <div class="sbox">
+        <label class="sfield" for="q">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" autocomplete="off" placeholder="">
+        </label>
+        <div class="modes" role="group">
+          <button id="m-text" aria-pressed="true" data-mode="text"></button>
+          <button id="m-ai" aria-pressed="false" data-mode="ai"></button>
+        </div>
+      </div>
+      <p class="hint" id="hint"></p>
+    </div>
+    <div class="wrap grid">
+      <aside class="filters" id="filters" aria-label="Filtros"></aside>
+      <div>
+        <div class="rhead"><span class="count" id="count"></span><span class="rbtns"><button id="ai-res">Copiar para IA</button><button id="random"></button></span></div>
+        <ol class="results" id="results"><li class="loading" id="loading">Cargando lecturas…</li></ol>
+        <button class="more" id="more" hidden></button>
+      </div>
+    </div>
+  </section>
+  <section id="readview" hidden><div class="wrap"><article class="reading" id="reading"></article></div></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><h4 class="rub" id="f-src-h">Fuente</h4><p id="f-src"></p></div>
+    <div><h4 class="rub" id="f-api-h">Datos abiertos</h4><p id="f-api"></p>
+      <p><code>llms.txt</code> · <code>api.json</code> · <code>data/index.json</code> · <code>data/r/00.json … 23.json</code> · <code>data/search.json</code></p></div>
+  </div>
+</footer>
+<dialog class="aidlg" id="aidlg" aria-label="Usar con tu IA"></dialog>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const I18N = {
+ es:{sub:'del Oficio', stats:(n,a)=>`Leccionario Bienal · ${n.toLocaleString('es')} lecturas · ${a} autores`, ph:'Buscar palabras, autor, obra o título…', phAi:'Describe un tema: p. ej. «la misericordia con los pobres»', mText:'Texto', mAi:'Preguntar a Claude',
+  hintText:'Busca en el texto completo, sin distinguir acentos. Usa comillas para frases exactas.', hintAi:'Claude busca por significado entre todas las lecturas y explica por qué cada una encaja.', hintLoadingFT:'Cargando el texto completo para la búsqueda…',
+  season:'Tiempo', cycle:'Año', kind:'Lectura', author:'Autor', allAuthors:'Todos los autores', reset:'Quitar filtros', count:n=>`${n.toLocaleString('es')} lecturas`, random:'Lectura al azar', more:'Mostrar más', none:'Ninguna lectura coincide. Prueba con menos palabras o quita filtros.',
+  back:'Volver a la lista', l2:'Segunda lectura', l3:'Tercera lectura', resp:'Responsorio', first:'Primera lectura del día', prayer:'Oración', copyCit:'Copiar referencia', copyText:'Copiar texto', copied:'Copiado', related:'Más de este autor', alsoOn:'Se lee', words:n=>`${n} palabras`,
+  aiThinking:'Claude está buscando… (puede tardar unos segundos)', aiNone:'Claude no encontró lecturas para esa descripción.', aiOff:'Preguntar a Claude no está disponible en esta vista.', aiErr:'No se pudo completar la búsqueda. Inténtalo de nuevo.', aiRate:'Demasiadas consultas seguidas. Espera un momento.', aiGo:'Pulsa Intro para preguntar.',
+  src:'Leccionario Bienal del Oficio de Lectura, edición de P. Alfertson Cedano (textos de la Conferencia Episcopal Española). Enlaces a traducciones inglesas: New Advent. Publicado con permiso.', api:'Los datos están disponibles en JSON para otras aplicaciones y agentes, junto a esta página:', srcH:'Fuente', apiH:'Datos abiertos',
+  seasons:{'adviento-navidad':'Adviento y Navidad','cuaresma-pascua':'Cuaresma y Pascua','ordinario':'Tiempo Ordinario','santoral':'Santoral','comunes':'Comunes','difuntos':'Difuntos','solemnidades':'Solemnidades del Señor'}, cycles:{par:'Par',impar:'Impar'}, kinds:{L2:'Segunda',L3:'Tercera (domingos)'}, year:'Ciclo',
+  tr:'Traducciones', trs:{e:'Con traducción inglesa'}, theme:'Tema', allThemes:'Todos los temas', themesH:'Temas', themesNote:'asignados automáticamente', scrH:'Escritura', cite:'Cómo citar', enH:'Traducción inglesa', enNote:'Traducción antigua de dominio público (Padres de la Iglesia, New Advent). El texto no coincide palabra por palabra con la lectura litúrgica.', enExact:'Abre el pasaje (libro, homilía o carta)', enWork:'Abre la obra completa'},
+};
+const SEASON_ORDER=['adviento-navidad','cuaresma-pascua','ordinario','solemnidades','santoral','comunes','difuntos'];
+const $=s=>document.querySelector(s);
+const st={lang:'es',mode:'text',q:'',season:new Set(),cycle:new Set(),kind:new Set(),tr:new Set(),author:'',theme:'',shown:40,ai:null,tab:null};
+let THEMES={}, DB=null, AUTH={}, FT=null, FTF=null, FTload=null, chunks={}, list=[];
+const T=()=>I18N[st.lang];
+
+// accent folding that keeps string length (so match offsets map back to the original text)
+const FC=new Map();
+function fold(s){let o='';for(const c of s){let f=FC.get(c);if(f===undefined){f=c.normalize('NFD')[0].toLowerCase();if(f.length!==c.length)f=c.toLowerCase();if(f.length!==c.length)f=c;FC.set(c,f)}o+=f}return o}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function aname(id){const a=AUTH[id]||{};return a[st.lang]||a.es||''}
+function terms(q){const out=[];q.replace(/"([^"]+)"|(\S+)/g,(m,p,w)=>{const t=fold((p||w).trim());if(t.length>1||/\p{Script=Han}/u.test(t))out.push(t)});return out}
+
+async function load(){
+  const [r,tr]=await Promise.all([fetch('data/index.json'),fetch('data/themes.json')]); DB=await r.json(); AUTH=DB.authors; THEMES=await tr.json();
+  DB.readings.forEach((x,i)=>{x.i=i;x.meta=fold([x.t,x.s,x.c,(AUTH[x.a]||{}).es,(AUTH[x.a]||{}).en||'',x.o.map(o=>o[2]).join(' ')].join(' '))});
+  $('#loading').remove(); applyLang(); route();
+}
+function loadFT(){
+  if(FTload) return FTload;
+  $('#hint').textContent=T().hintLoadingFT;
+  FTload=fetch('data/search.json').then(r=>r.json()).then(j=>{FT=j;FTF={};for(const k in j)FTF[k]=fold(j[k]);updHint();render();});
+  return FTload;
+}
+function chunk(n){if(!chunks[n])chunks[n]=fetch('data/r/'+String(n).padStart(2,'0')+'.json').then(r=>r.json());return chunks[n]}
+
+function matches(x){
+  if(st.kind.size&&!st.kind.has(x.k))return false;
+  if(st.author&&x.a!==st.author)return false;
+  if(st.theme&&!(x.th||[]).includes(st.theme))return false;
+  if(st.tr.has('e')&&!x.e)return false;
+  if(st.cycle.size&&!x.o.some(o=>st.cycle.has(o[0])))return false;
+  if(st.season.size&&!x.o.some(o=>st.season.has(o[1])))return false;
+  return true;
+}
+function compute(){
+  let base=DB.readings.filter(matches);
+  if(st.mode==='ai'&&st.ai&&st.ai.items){
+    const by=new Map(base.map(x=>[x.id,x]));
+    return st.ai.items.map(it=>by.get(it.id)&&Object.assign({},by.get(it.id),{why:it.why})).filter(Boolean);
+  }
+  const ts=st.mode==='text'?terms(st.q):[];
+  if(!ts.length)return base;
+  const out=[];
+  for(const x of base){
+    let score=0,ok=true;
+    for(const t of ts){
+      const inMeta=x.meta.includes(t), body=FTF?FTF[x.id]:'';
+      let c=0,p=-1; if(body){while((p=body.indexOf(t,p+1))>-1&&c<50)c++}
+      if(!inMeta&&!c){ok=false;break}
+      score+=(inMeta?20:0)+c;
+    }
+    if(ok){x.score=score;out.push(x)}
+  }
+  return out.sort((a,b)=>b.score-a.score);
+}
+function kwic(x,ts){
+  if(!ts.length||!FT)return esc(x.sn)+'…';
+  const body=FTF[x.id],raw=FT[x.id];let pos=-1,len=0;
+  for(const t of ts){const p=body.indexOf(t);if(p>-1){pos=p;len=t.length;break}}
+  if(pos<0)return esc(x.sn)+'…';
+  const a=Math.max(0,raw.lastIndexOf(' ',Math.max(0,pos-90))), b=Math.min(raw.length,raw.indexOf(' ',pos+len+130)>-1?raw.indexOf(' ',pos+len+130):raw.length);
+  return (a>0?'… ':'')+hl(raw.slice(a,b),body.slice(a,b),ts)+(b<raw.length?' …':'');
+}
+function hl(raw,fl,ts){
+  const marks=[];for(const t of ts){let p=-1;while((p=fl.indexOf(t,p+1))>-1)marks.push([p,p+t.length])}
+  marks.sort((a,b)=>a[0]-b[0]);let o='',i=0;
+  for(const [s,e] of marks){if(s<i)continue;o+=esc(raw.slice(i,s))+'<mark>'+esc(raw.slice(s,e))+'</mark>';i=e}
+  return o+esc(raw.slice(i));
+}
+function occLabel(o){return `${T().seasons[o[1]]||o[1]} · ${T().cycles[o[0]]}`}
+function render(){
+  if(!DB)return;
+  list=compute();
+  const ts=st.mode==='text'?terms(st.q):[];
+  $('#count').textContent=T().count(list.length);
+  const ol=$('#results');ol.innerHTML='';
+  if(st.mode==='ai'&&st.ai&&st.ai.status){ol.innerHTML=`<li class="empty">${esc(st.ai.status)}</li>`;$('#more').hidden=true;$('#count').textContent='';return}
+  if(!list.length){ol.innerHTML=`<li class="empty">${st.mode==='ai'&&st.ai?T().aiNone:T().none}</li>`;$('#more').hidden=true;return}
+  const frag=document.createDocumentFragment();
+  for(const x of list.slice(0,st.shown)){
+    const li=document.createElement('li');const o=x.o[0];
+    const days=[...new Set(x.o.map(o=>o[2]))].slice(0,2).join(' · ');
+    li.innerHTML=`<button class="item" data-id="${x.id}">
+      <div class="imeta"><span class="rub">${esc(x.k==='L3'?T().l3:T().l2)} · ${esc(T().seasons[o[1]]||'')}</span><span class="day">${esc(days)}</span>${x.e?'<span class="tag">EN</span>':''}</div>
+      <div class="ititle">${ts.length?hl(x.t,fold(x.t),ts):esc(x.t)}</div>
+      <div class="iauth">${esc(aname(x.a))} <span>· ${esc(x.c||x.s)}</span></div>
+      ${x.why?`<p class="why">${esc(x.why)}</p>`:`<p class="isnip">${kwic(x,ts)}</p>`}</button>`;
+    frag.append(li);
+  }
+  ol.append(frag);
+  $('#more').hidden=list.length<=st.shown;
+}
+function renderFilters(){
+  const f=$('#filters'), t=T(), c={season:{},cycle:{},kind:{},tr:{e:0}};
+  for(const x of DB.readings){c.kind[x.k]=(c.kind[x.k]||0)+1;c.tr.e+=x.e||0;for(const s of new Set(x.o.map(o=>o[1])))c.season[s]=(c.season[s]||0)+1;for(const y of new Set(x.o.map(o=>o[0])))c.cycle[y]=(c.cycle[y]||0)+1}
+  const chips=(key,keys,labels)=>keys.filter(k=>c[key][k]).map(k=>`<button class="chip" id="f-${key}-${k}" data-f="${key}" data-v="${k}" aria-pressed="${st[key].has(k)}">${esc(labels[k])}<span class="n">${c[key][k]}</span></button>`).join('');
+  const opts=Object.entries(AUTH).map(([id,a])=>`<option value="${id}" ${st.author===id?'selected':''}>${esc(a[st.lang]||a.es)} (${a.n})</option>`).join('');
+  const tc={};for(const x of DB.readings)for(const k of x.th||[])tc[k]=(tc[k]||0)+1;
+  const thOpts=Object.entries(THEMES).filter(([k])=>tc[k]).sort((a,b)=>a[1].localeCompare(b[1],'es')).map(([k,v])=>`<option value="${k}" ${st.theme===k?'selected':''}>${esc(v)} (${tc[k]})</option>`).join('');
+  f.innerHTML=`<div class="fgroup"><h3 class="rub">${t.season}</h3><div class="chips">${chips('season',SEASON_ORDER,t.seasons)}</div></div>
+   <div class="fgroup"><h3 class="rub">${t.cycle}</h3><div class="chips">${chips('cycle',['par','impar'],t.cycles)}</div></div>
+   <div class="fgroup"><h3 class="rub">${t.kind}</h3><div class="chips">${chips('kind',['L2','L3'],t.kinds)}</div></div>
+   <div class="fgroup"><h3 class="rub">${t.tr}</h3><div class="chips">${chips('tr',['e'],t.trs)}</div></div>
+   <div class="fgroup"><h3 class="rub"><label for="ftheme">${t.theme}</label></h3><select id="ftheme"><option value="">${t.allThemes}</option>${thOpts}</select></div>
+   <div class="fgroup"><h3 class="rub"><label for="fauthor">${t.author}</label></h3><select id="fauthor"><option value="">${t.allAuthors}</option>${opts}</select></div>
+   <button class="reset" id="freset">${t.reset}</button>`;
+}
+function updHint(){ $('#hint').textContent=st.mode==='ai'?(st.q?T().aiGo:T().hintAi):(FTload&&!FT?T().hintLoadingFT:T().hintText) }
+function applyLang(){
+  const t=T();document.documentElement.lang=st.lang==='zh'?'zh-Hant':st.lang;
+  $('#h-sub').textContent=t.sub; if(DB)$('#stats').textContent=t.stats(DB.readings.length,Object.keys(AUTH).length);
+  $('#q').placeholder=st.mode==='ai'?t.phAi:t.ph; $('#m-text').textContent=t.mText; $('#m-ai').textContent=t.mAi;
+  $('#random').textContent=t.random; $('#more').textContent=t.more;
+  $('#f-src').textContent=t.src; $('#f-api').textContent=t.api; $('#f-src-h').textContent=t.srcH; $('#f-api-h').textContent=t.apiH;
+  updHint(); if(DB){renderFilters();render();if(!$('#readview').hidden&&cur)showReading(cur,true)}
+}
+
+// ---------- reading page ----------
+let cur=null;
+function respHTML(r){
+  if(!r||!r.text||!r.text.length)return'';
+  const line=s=>{const m=s.match(/^(R\.|V\.)\s*/);const sig=m?(m[1]==='R.'?'℟.':'℣.'):'';const body=esc(m?s.slice(m[0].length):s).replace(/\*/g,'<span class="ast">*</span>');return `<p>${sig?`<span class="sig">${sig}</span> `:''}${body}</p>`};
+  return `<div class="resp"><h2 class="lbl rub">${T().resp}${r.ref?`<span class="rref">${esc(r.ref)}</span>`:''}</h2>${r.text.map(line).join('')}</div>`;
+}
+async function showReading(id,keepScroll){
+  const x=DB.readings.find(r=>r.id===id); if(!x){location.hash='';return}
+  cur=id; const r=(await chunk(x.ch))[id]; const t=T();
+  const occ=[...new Map(r.occurrences.map(o=>[o.cycle+o.season+(o.day||o.section),o])).values()];
+  const rel=DB.readings.filter(y=>y.a===x.a&&y.id!==x.id).slice(0,8);
+  const fr=r.first_reading;
+  $('#reading').innerHTML=`<button class="back" id="back">← ${t.back}</button>
+   <div class="occ"><span class="rub">${t.alsoOn}</span>${occ.map(o=>`<div><b>${esc(o.day||o.section||'')}</b> — ${esc(t.seasons[o.season]||'')} · ${esc(t.cycles[o.cycle])}</div>`).join('')}</div>
+   ${r.day_notes&&r.day_notes.length&&r.day_notes.join(' ').length>40?`<div class="notes">${r.day_notes.filter(n=>n.length>40).map(n=>`<p>${esc(n)}</p>`).join('')}</div>`:''}
+   <div id="pane-es">
+   <h2 class="lbl rub">${r.kind==='L3'?t.l3:t.l2}${r.year&&r.year.gospel?` · ${r.year.year?t.year+' '+esc(r.year.year)+' · ':''}${esc(r.year.gospel)}`:''}</h2>
+   <p class="src">${esc(r.source)}</p>${r.citation?`<p class="cit">(${esc(r.citation)})</p>`:''}
+   <h1 class="title">${esc(r.title||'')}</h1>
+   <div class="prose">${r.text.map(p=>`<p>${esc(p)}</p>`).join('')}</div>
+   </div>
+   ${r.scripture&&r.scripture.length?`<p class="cit"><span class="rub">${t.scrH}</span> · ${r.scripture.map(x=>esc(x.ref)+' <span style="opacity:.75">('+esc(x.role)+')</span>').join(' · ')}</p>`:''}
+   ${r.themes&&r.themes.length?`<p class="cit"><span class="rub">${t.themesH}</span> · ${r.themes.map(k=>esc(THEMES[k]||k)).join(' · ')} <span style="opacity:.75">(${t.themesNote})</span></p>`:''}
+   ${r.cite?`<p class="cit"><span class="rub">${t.cite}</span> · ${esc(r.cite)}</p>`:''}
+   <div class="tools"><button id="cp-cit">${t.copyCit}</button><button id="cp-txt">${t.copyText}</button><button id="cp-ai">Copiar para IA</button><span class="cit" style="align-self:center">${t.words(x.w)}</span></div>
+   ${r.en?`<a class="encard" href="${esc(r.en.url)}" target="_blank" rel="noopener"><span class="rub">${t.enH}</span><b>${esc(((AUTH[x.a]||{}).en||'')+(r.en.work?' — '+r.en.work:''))}</b><span>${r.en.exact?t.enExact:t.enWork} ↗</span><small>${t.enNote}</small></a>`:''}
+   ${fr?`<details class="first"><summary><span><span class="rub">${t.first}</span><br><span class="src">${esc(fr.source)}</span></span>${fr.title?`<em>${esc(fr.title)}</em>`:''}</summary><div class="prose">${fr.text.map(p=>`<p>${esc(p)}</p>`).join('')}</div><div style="height:14px"></div></details>`:''}
+   ${rel.length?`<div class="related"><h2 class="lbl rub">${t.related} — ${esc(aname(x.a))}</h2><ul>${rel.map(y=>`<li><button data-id="${y.id}">${esc(y.t)}<br><span>${esc(y.c||y.s)}</span></button></li>`).join('')}</ul></div>`:''}`;
+  $('#listview').hidden=true; $('#readview').hidden=false; if(!keepScroll)window.scrollTo(0,0);
+  $('#back').onclick=()=>{location.hash=''};
+  $('#cp-cit').onclick=()=>copy(r.cite||`${aname(x.a)}, ${r.source}${r.citation?' ('+r.citation+')':''} — «${r.title||''}»`);
+  $('#cp-ai').onclick=aiCopyReading;
+  $('#cp-txt').onclick=()=>copy([r.source,r.citation?'('+r.citation+')':'',r.title,'',...r.text].join('\n'));
+  document.querySelectorAll('.related button').forEach(b=>b.onclick=()=>{location.hash='r-'+b.dataset.id});
+}
+function copy(s){
+  const done=()=>toast(T().copied);
+  try{navigator.clipboard.writeText(s).then(done,()=>fallback(s))}catch(e){fallback(s)}
+  function fallback(s){const ta=document.createElement('textarea');ta.value=s;document.body.append(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove()}
+}
+function toast(s){const el=$('#toast');el.textContent=s;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,1600)}
+let listScroll=0;
+function route(){
+  const h=location.hash.slice(1);
+  if(h.startsWith('r-')){ if($('#readview').hidden)listScroll=window.scrollY; showReading(h.slice(2)); }
+  else { cur=null; $('#readview').hidden=true; $('#listview').hidden=false; window.scrollTo(0,listScroll); }
+}
+
+// ---------- Ask Claude (meaning-based search) ----------
+let sampleFn=null, aiCtl=null;
+(async()=>{try{sampleFn=await window.claude?.use?.('sample')}catch(e){sampleFn=null} if(!sampleFn){$('#m-ai').hidden=true}})();
+async function askClaude(){
+  const q=st.q.trim(); if(!q)return;
+  if(!sampleFn){st.ai={status:T().aiOff};render();return}
+  aiCtl?.abort(); aiCtl=new AbortController();
+  st.ai={status:T().aiThinking}; render();
+  const cat=DB.readings.map(x=>`${x.id}|${(AUTH[x.a]||{}).es}|${x.t}|${x.s.slice(0,90)}`).join('\n');
+  const lang='Spanish';
+  const prompt=`You help a Catholic priest find readings from the Office of Readings (patristic and spiritual authors, Spanish texts). Below is a catalogue, one reading per line: id|author|title|source.\n\nRequest: "${q}"\n\nChoose up to 12 readings whose theme best matches the request in meaning (not just shared words). Use your knowledge of these Fathers' works to judge what each passage is about. Order from most to least relevant. Reply with only a JSON array like [{"id":"abc123","why":"one short sentence"}], with "why" written in ${lang}. Use only ids from the catalogue.\n\nCATALOGUE\n${cat}`;
+  try{
+    const res=await sampleFn.json(prompt,{signal:aiCtl.signal});
+    const items=(Array.isArray(res)?res:[]).filter(i=>i&&typeof i.id==='string').map(i=>({id:i.id,why:String(i.why||'')}));
+    st.ai={items}; st.shown=40;
+  }catch(e){
+    if(e&&e.code==='cancelled')return;
+    if(e&&['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(e.code)){$('#m-ai').hidden=true;setMode('text');return}
+    st.ai={status:e&&e.code==='rate_limited'?T().aiRate:T().aiErr};
+  }
+  render();
+}
+function setMode(m){st.mode=m;st.ai=null;document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.mode===m));$('#q').placeholder=m==='ai'?T().phAi:T().ph;updHint();render()}
+
+// ---------- events ----------
+let qT;
+$('#q').addEventListener('input',e=>{st.q=e.target.value;st.shown=40;if(st.mode==='text'){if(st.q.trim())loadFT();clearTimeout(qT);qT=setTimeout(render,140)}else{st.ai=null;updHint();render()}});
+$('#q').addEventListener('keydown',e=>{if(e.key==='Enter'&&st.mode==='ai'){e.preventDefault();askClaude()}});
+document.querySelectorAll('.modes button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+$('#filters').addEventListener('click',e=>{
+  const b=e.target.closest('.chip'); if(b){const s=st[b.dataset.f];s.has(b.dataset.v)?s.delete(b.dataset.v):s.add(b.dataset.v);b.setAttribute('aria-pressed',s.has(b.dataset.v));st.shown=40;render();return}
+  if(e.target.id==='freset'){st.season.clear();st.cycle.clear();st.kind.clear();st.tr.clear();st.author='';st.theme='';renderFilters();render()}
+});
+$('#filters').addEventListener('change',e=>{if(e.target.id==='fauthor'){st.author=e.target.value;st.shown=40;render()}if(e.target.id==='ftheme'){st.theme=e.target.value;st.shown=40;render()}});
+$('#results').addEventListener('click',e=>{const b=e.target.closest('.item');if(b)location.hash='r-'+b.dataset.id});
+$('#more').onclick=()=>{st.shown+=40;render()};
+$('#random').onclick=()=>{const pool=list.length?list:DB.readings;location.hash='r-'+pool[Math.floor(Math.random()*pool.length)].id};
+window.addEventListener('hashchange',route);
+
+const SELF="https://claude.ai/artifact/ADn7MJFeP2ogEpRpjsbuhX"||location.href.replace(/#.*$/,'');
+const AIX={list:()=>list, query:()=>st.q.trim(), cur:()=>cur,
+ full:async(id,light)=>{const x=DB.readings.find(r=>r.id===id);const days=[...new Set(x.o.map(o=>`${o[2]} (${T().seasons[o[1]]||o[1]}, año ${String(T().cycles[o[0]]).toLowerCase()})`))].join('; ');
+  const base={title:x.t,author:aname(x.a),source:x.s,citation:x.c,days,url:(MIRROR?new URL('r/'+id+'.md',new URL(MIRROR,location.href)).href:SELF+'#r-'+id),text:[]};
+  if(light)return base;const r=(await chunk(x.ch))[id];return Object.assign(base,{title:r.title||x.t,source:r.source,citation:r.citation,cite:r.cite,text:r.text})}};
+// ---------- Use with any AI: exports, copy-for-AI, guide ----------
+// Needs from the host app: AIX.list() (current results), AIX.full(id) -> {id,title,author,source,citation,days,text[],url},
+// AIX.cur() (open reading id or null), copy(), toast(), $().
+const AI_FILES = [{"path": "ai/segundas-lecturas-completo.md", "name": "segundas-lecturas-completo.md", "label": "Todas las lecturas · Markdown (4,5 MB)", "note": "Para ChatGPT, Claude, Gemini y Copilot"}, {"path": "ai/segundas-lecturas-parte-1.md", "name": "segundas-lecturas-parte-1.md", "label": "Parte 1 · Adviento a Pascua, Santoral, Comunes", "note": "Para NotebookLM (límite por fuente)"}, {"path": "ai/segundas-lecturas-parte-2.md", "name": "segundas-lecturas-parte-2.md", "label": "Parte 2 · Tiempo Ordinario", "note": "Para NotebookLM (límite por fuente)"}, {"path": "ai/segundas-lecturas.jsonl", "name": "segundas-lecturas.jsonl.txt", "label": "Datos estructurados · JSONL", "note": "Una lectura por línea, para agentes y programadores"}];
+const AI_S = {
+ title:'Usar con tu IA', close:'Cerrar', copy:'Copiar', download:'Descargar', preparing:'Preparando…', saved:'Descargado', dlErr:'No se pudo descargar.',
+ lead:'Estas lecturas se pueden consultar con cualquier asistente de IA: ChatGPT, Claude, Gemini, Copilot, NotebookLM… Elige la forma que prefieras.',
+ s1:'Dale a tu IA todo el corpus', s1p:'Descarga el archivo y súbelo a un proyecto o fuente de tu IA. Así podrá buscar por tema, autor o idea en todas las lecturas y citarlas con exactitud.',
+ howH:'Cómo hacerlo en cada IA',
+ how:'<ul><li><b>ChatGPT</b>: crea un Proyecto → «Añadir archivos» → sube el archivo completo. Pega las instrucciones de abajo en «Instrucciones».</li><li><b>Claude</b>: crea un Proyecto → «Conocimiento del proyecto» → sube el archivo completo; pega las instrucciones en «Instrucciones del proyecto».</li><li><b>Gemini</b>: crea un Gem → «Conocimiento» → sube el archivo; pega las instrucciones.</li><li><b>NotebookLM</b>: crea un cuaderno y añade las dos partes como fuentes (cada fuente admite hasta 500 000 palabras).</li><li><b>Copilot u otras</b>: adjunta el archivo a la conversación.</li></ul>',
+ instrH:'Instrucciones para tu IA',
+ instr:'Eres un asistente para buscar en las segundas lecturas del Oficio de Lectura (Leccionario Bienal) que están en el archivo adjunto. Cuando te pida un tema, una idea, un autor, un día o una fiesta:\n1. Busca en el archivo las lecturas que encajan por su sentido, no solo por las palabras.\n2. Para cada una indica título, autor, fuente y cita patrística, el día en que se lee y el enlace.\n3. Explica en una frase por qué encaja y cita una o dos frases textuales exactas.\n4. No inventes lecturas ni citas. Si nada encaja, dilo.\nResponde en el idioma en que te escribo.',
+ s2:'Lleva unas lecturas concretas a tu IA', s2p:'Busca aquí primero; luego copia los resultados (o una sola lectura, con «Copiar para IA» en su página) y pégalos en el chat de cualquier IA. Se copia el texto completo de las 10 primeras lecturas y la referencia de las demás.',
+ copyResults:'Copiar resultados para IA',
+ s3:'Enlace para IAs que navegan por la web', s3p:'Las IAs con navegación web (ChatGPT, Claude, Gemini, Perplexity…) pueden leer la versión pública de esta biblioteca. Copia este mensaje, pégalo en el chat y completa tu pregunta:',
+ s3none:'La versión pública aún no está en línea. Cuando lo esté, aquí aparecerá un enlace que cualquier IA con navegación web podrá leer.',
+ webH:'Mensaje para la IA',
+ web:b=>`Usa ${b}llms.txt para buscar en las segundas lecturas del Oficio de Lectura (Leccionario Bienal). Lee primero llms.txt; desde ahí encontrarás el calendario (${b}calendario/), los índices por libro de la Biblia (${b}escritura/), por tema (${b}temas/) y por autor (${b}autores.md), y el catálogo (${b}catalogo.md). Abre cada lectura (${b}r/<id>.md) antes de citarla, cítala con su línea «Cómo citar» y su enlace, y no inventes lecturas ni citas.\n\nMi pregunta: `,
+ promptOne:'Esta es una segunda lectura del Oficio de Lectura (Leccionario Bienal). Úsala para responder a mi pregunta; cita textualmente, con su referencia.\n\nMi pregunta: [escribe aquí]',
+ promptMany:(q,n,k)=>`Estas son lecturas del Oficio de Lectura (Leccionario Bienal) que encontré${q?` buscando «${q}»`:''}: ${n} en total, con el texto completo de las ${k} primeras. Úsalas para responder a mi pregunta; cita textualmente, con referencia y enlace, y no inventes nada.\n\nMi pregunta: [escribe aquí]`,
+ alsoList:'Otras lecturas encontradas (solo referencia):', readOn:'Se lee', link:'Enlace', noResults:'No hay resultados que copiar.'
+};
+const MIRROR = "";            // public mirror base URL ('' = not deployed yet)
+const AI_SITES = [['ChatGPT','https://chatgpt.com/'],['Claude','https://claude.ai/new'],['Gemini','https://gemini.google.com/app'],['Copilot','https://copilot.microsoft.com/']];
+let dl = null;
+(async()=>{try{dl=await window.claude?.use?.('downloads')}catch(e){dl=null}})();
+
+function readingBlock(r){
+  const head=[`### ${r.title} — ${r.author}`, `${r.source}${r.citation?' ('+r.citation+')':''}`, r.days?`${AI_S.readOn}: ${r.days}`:null, r.cite?`Cómo citar: ${r.cite}`:null, `${AI_S.link}: ${r.url}`].filter(Boolean);
+  return [...head,'',...r.text].join('\n');
+}
+async function aiCopyReading(){
+  const id=AIX.cur(); if(!id) return;
+  const r=await AIX.full(id);
+  copy(AI_S.promptOne + '\n\n' + readingBlock(r));
+}
+async function aiCopyResults(){
+  const L=AIX.list(); if(!L.length){toast(AI_S.noResults);return}
+  const q=AIX.query();
+  const full=[], cites=[]; let size=0;
+  for(const x of L.slice(0,60)){
+    if(full.length<10 && size<45000){const r=await AIX.full(x.id); const b=readingBlock(r); size+=b.length; full.push(b)}
+    else { const r=await AIX.full(x.id,true); cites.push(`- ${r.title} — ${r.author} · ${r.source}${r.citation?' ('+r.citation+')':''} · ${r.url}`) }
+  }
+  const head = AI_S.promptMany(q, L.length, full.length);
+  copy([head, '', ...full.map(b=>b+'\n'), cites.length?AI_S.alsoList+'\n'+cites.join('\n'):''].join('\n'));
+}
+async function aiDownload(f, btn){
+  const old=btn.textContent; btn.disabled=true; btn.textContent=AI_S.preparing;
+  try{
+    if(dl){
+      const blob=await (await fetch(f.path)).blob();
+      try{await dl.save({filename:f.name,data:blob}); toast(AI_S.saved)}
+      catch(e){ if(e&&e.code!=='declined') toast(AI_S.dlErr) }
+    } else {
+      const a=document.createElement('a'); a.href=f.path; a.download=f.path.split('/').pop(); document.body.append(a); a.click(); a.remove();
+    }
+  }catch(e){toast(AI_S.dlErr)}
+  btn.disabled=false; btn.textContent=old;
+}
+function aiOpenSite(url){ window.open(url,'_blank','noopener') }
+
+function aiPanel(){
+  const base = MIRROR ? new URL(MIRROR, location.href).href : '';
+  const d=$('#aidlg');
+  d.innerHTML=`<div class="aip">
+   <div class="aip-h"><h2>${AI_S.title}</h2><button class="aix" id="ai-close" aria-label="${AI_S.close}">✕</button></div>
+   <p class="aip-lead">${AI_S.lead}</p>
+   <section><h3 class="rub">1 · ${AI_S.s1}</h3><p>${AI_S.s1p}</p>
+     <div class="aidl">${AI_FILES.map((f,i)=>`<div class="aif"><div><b>${f.label}</b><small>${f.note}</small></div><button data-f="${i}">${AI_S.download}</button></div>`).join('')}</div>
+     <details class="howto"><summary>${AI_S.howH}</summary>${AI_S.how}</details>
+     <div class="aiprompt"><div class="aiprompt-h"><span class="rub">${AI_S.instrH}</span><button id="ai-cpinstr">${AI_S.copy}</button></div><pre id="ai-instr">${esc(AI_S.instr)}</pre></div>
+   </section>
+   <section><h3 class="rub">2 · ${AI_S.s2}</h3><p>${AI_S.s2p}</p>
+     <div class="aibtns"><button id="ai-cpres">${AI_S.copyResults}</button>${AI_SITES.map(([n,u])=>`<button data-site="${u}">${n} ↗</button>`).join('')}</div></section>
+   <section><h3 class="rub">3 · ${AI_S.s3}</h3>${base?`<p>${AI_S.s3p}</p><div class="aiprompt"><div class="aiprompt-h"><span class="rub">${AI_S.webH}</span><button id="ai-cpweb">${AI_S.copy}</button></div><pre id="ai-web">${esc(AI_S.web(base))}</pre></div>`:`<p>${AI_S.s3none}</p>`}</section>
+  </div>`;
+  d.showModal();
+  d.querySelector('#ai-close').onclick=()=>d.close();
+  d.querySelectorAll('.aif button').forEach(b=>b.onclick=()=>aiDownload(AI_FILES[+b.dataset.f],b));
+  d.querySelector('#ai-cpinstr').onclick=()=>copy(AI_S.instr);
+  d.querySelector('#ai-cpres').onclick=()=>{d.close();aiCopyResults()};
+  d.querySelectorAll('[data-site]').forEach(b=>b.onclick=()=>aiOpenSite(b.dataset.site));
+  const w=d.querySelector('#ai-cpweb'); if(w)w.onclick=()=>copy(AI_S.web(base));
+}
+$('#aibtn').onclick=aiPanel;
+$('#aidlg').addEventListener('click',e=>{if(e.target.id==='aidlg')e.target.close()});
+$('#ai-res').onclick=aiCopyResults;
+
+load().catch(()=>{$('#loading').textContent='No se pudieron cargar los datos.'});
+</script>
+</body></html>
